@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI_WORKSHOP.MainPage">
+
+    <Grid RowDefinitions="100, Auto, *" 
+          RowSpacing="10"
+          ColumnDefinitions=".75*, .25*"
+          ColumnSpacing="10"
+          Padding="15">
+        <!--Aqui defino 2 columnas, la primera usara el 75% de la pantalla y la segunda el 25%-->
+        <!--Aqui defino 3 filas, la primera de 100 pixeles, la segunda usara el espacio que necesite y la tercera tomará el espacio que sobra-->
+        <!--El column y row spacing añade espacio en pixeles entre una y otra-->
+
+        <Image Grid.ColumnSpan ="2" Source="dotnet_bot.svg" > <!--La imagen va a usar 2 columnas-->
+        </Image>
+        <Entry Placeholder="Entrada de texto" Grid.Row="1"></Entry> <!--Con el Grid.Row="1" se indica exactamente donde va la entrada -->
+        <Button Grid.Row="1" Grid.Column="1" Text="Agregar" ></Button>
+
+        <CollectionView Grid.Row="2" Grid.ColumnSpan="2">
+            <CollectionView.ItemsSource>
+                <!--Define de donde viene su contenido-->
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Arreglo indice 0</x:String>
+                    <x:String>Arreglo indice 1</x:String>
+                    <x:String>Arreglo indice 2</x:String>
+                </x:Array> <!--Defino un arreglo-->
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView> 
+                        <SwipeView.RightItems>
+                            <SwipeItem Text="Derecha"
+                                       BackgroundColor="White"/>
+                        </SwipeView.RightItems>
+                        <SwipeView.LeftItems>
+                            <SwipeItem Text="Izquierda"/>
+                        </SwipeView.LeftItems>
+                        <Grid>
+                            <Frame>
+                                <Label Text="{Binding .}"
+                                   TextColor="Black"/>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                    <!--Esta vista aparecerá cuando se haga swipe a la direccion anterior: -->
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate> <!--Template = plantilla -->
+        </CollectionView> <!--Aqui se mostraran los task guardados-->
+
+    </Grid>
+</ContentPage>
