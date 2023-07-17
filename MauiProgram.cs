@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MAUI_WORKSHOP.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace MAUI_WORKSHOP;
 
@@ -18,6 +19,8 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+		builder.Services.AddSingleton<MainPage>();
+		builder.Services.AddSingleton<MainViewModel>(); //Registro el sistema (MainPage.cs) en la dependencia de servicios. Al ser singleton solo se creera una vez
 
 		return builder.Build();
 	}

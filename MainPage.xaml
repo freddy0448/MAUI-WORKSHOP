@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUI_WORKSHOP.MainPage">
+             x:Class="MAUI_WORKSHOP.MainPage"
+             xmlns:viewmodel="clr-namespace:MAUI_WORKSHOP.ViewModel"
+             x:DataType="viewmodel:MainViewModel">
+    <!-- Con las ultimas 2 lineas defino cual va a ser el ViewModel de la vista-->
 
     <Grid RowDefinitions="100, Auto, *" 
           RowSpacing="10"
@@ -14,28 +17,19 @@
 
         <Image Grid.ColumnSpan ="2" Source="dotnet_bot.svg" > <!--La imagen va a usar 2 columnas-->
         </Image>
-        <Entry Placeholder="Entrada de texto" Grid.Row="1"></Entry> <!--Con el Grid.Row="1" se indica exactamente donde va la entrada -->
-        <Button Grid.Row="1" Grid.Column="1" Text="Agregar" ></Button>
+        <Entry Placeholder="Entrada de texto" Grid.Row="1" Text="{Binding Text}"></Entry> <!--Con el Grid.Row="1" se indica exactamente donde va la entrada. Con el {Binding text} indique que el dato ingresado se guardara en la propiedad llamada text -->
+        <Button Grid.Row="1" Grid.Column="1" Text="Agregar" Command="{Binding AddCommand}" ></Button> <!--El AddCommand va a ejecutar el metodo Add-->
 
-        <CollectionView Grid.Row="2" Grid.ColumnSpan="2">
-            <CollectionView.ItemsSource>
-                <!--Define de donde viene su contenido-->
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Arreglo indice 0</x:String>
-                    <x:String>Arreglo indice 1</x:String>
-                    <x:String>Arreglo indice 2</x:String>
-                </x:Array> <!--Defino un arreglo-->
-            </CollectionView.ItemsSource>
+        <CollectionView Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Items}">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="{x:Type x:String}"> <!--Asocia el DataTemplate para que sea un string-->
                     <SwipeView> 
                         <SwipeView.RightItems>
-                            <SwipeItem Text="Derecha"
-                                       BackgroundColor="White"/>
+                            <SwipeItem Text="Eliminar"
+                                       BackgroundColor="White"
+                                       Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel }}, Path=Delete}"
+                                       CommandParameter="{Binding .}"/> <!--No uses el source, usa un relativeSource que es un ancestro del tipo view model-->
                         </SwipeView.RightItems>
-                        <SwipeView.LeftItems>
-                            <SwipeItem Text="Izquierda"/>
-                        </SwipeView.LeftItems>
                         <Grid>
                             <Frame>
                                 <Label Text="{Binding .}"
