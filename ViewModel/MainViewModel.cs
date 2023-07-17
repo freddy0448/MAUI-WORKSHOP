@@ -1,25 +1,12 @@
 ﻿
-using Microsoft.Maui.Controls.Compatibility;
-using System.ComponentModel;
+
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace MAUI_WORKSHOP.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public partial class MainViewModel : ObservableObject //Esta clase viene de un paquete NuGet llamado CommunityToolkit.MVVM. Se hace uso de la clase parcial, para asi poder añadir codigo a la clase.
     {
-        public string Text 
-        {
-            get => Text;
-            set
-            {
-                Text = value;
-                OnPropertyChanged(nameof(Text));
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged; //Implemento la interfaz
-        
-        void OnPropertyChanged(string propertyName) //Creo un metodo que usa
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); // Esto levanta el evento PropertieChanged y cambiara la propiedad indicada
-        }
+        [ObservableProperty]
+        string text;
     }
 }
